@@ -1,0 +1,31 @@
+{
+    "name": "illyria-node",
+    "version": "0.0.1",
+    "description": "illyria node client & server",
+    "main": "lib/index.js",
+    "engines": {
+        "node": ">=0.10.26"
+    },
+    "repository": {
+        "type": "git",
+        "url": "ssh://gitlab@gitlab.widget-inc.com:65422/huaban/illyria-node.git"
+    },
+    "keywords": [
+        "illyria",
+        "tcp",
+        "rpc",
+        "client",
+        "server"
+    ],
+    "dependencies": {
+        "assert-plus": "0.1.5",
+        "msgpack": "0.2.x",
+        "underscore": "1.6.0"
+    },
+    "author": "libin <bin.li@upai.com>",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "readme": "illyria-node",
+    "license": "BSD"
+}
