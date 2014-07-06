@@ -1,14 +1,42 @@
-var Server = require('../lib/server');
+var _ = require('underscore');
 
-var srv = new Server();
-console.log(srv);
-srv.expose('Number', {
-    add: function(a, b, result) {
-        return result(null, a + b);
-    },
-    echo: function(text, result) {
-        return result(null, text);
+var server = require('../lib').createServer({
+    port: 9990
+});
+
+server.expose('Number', {
+    add: function(params, result) {
+        console.log('server add:', params);
+        var sum = 0;
+        params.forEach(function(n) {
+            sum += n;
+        });
+        return result(null, sum);
     }
 });
 
-srv.listen(8888);
+
+var client = require('../lib').createClient({
+    port:9990,
+    runTimeout: 10000,
+    retryInterval: 1000,
+    reconnect: true
+});
+client.connect();
+
+client.on('error', function(err) {
+    console.log(err);
+});
+
+function run() {
+    client.rpc(
+        'Number',
+        'add',
+        _.sample([1, 2, 3, 4, 5, 6], 2),
+        function(err, data) {
+            console.log('client recv:', err, data);
+            process.nextTick(run);
+        });
+}
+
+run();
