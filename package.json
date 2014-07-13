@@ -18,7 +18,6 @@
         "server"
     ],
     "dependencies": {
-        "assert-plus": "0.1.5",
         "msgpack": "0.2.x",
         "underscore": "1.6.0",
         "eventemitter2": "~0.4.11"

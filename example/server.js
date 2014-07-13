@@ -5,13 +5,13 @@ var server = require('../lib').createServer({
 });
 
 server.expose('Number', {
-    add: function(params, result) {
-        console.log('server add:', params);
+    add: function(req, res) {
+        console.log('server add:', req.params());
         var sum = 0;
-        params.forEach(function(n) {
+        req.params().forEach(function(n) {
             sum += n;
         });
-        return result(null, sum);
+        return res.send(sum);
     }
 });
 
