@@ -1,19 +1,25 @@
 var _ = require('underscore');
 var illyria = require('../lib');
 
-illyria.expose('Number', {
-    add: function(req, res) {
-        console.log('server add:', req.params());
-        var sum = 0;
-        req.params().forEach(function(n) {
-            sum += n;
-        });
-        return res.send(sum);
-    }
+var server = illyria.createServer({
+    port: 9990
 });
 
-var server = require('../lib').createServer({
-    port: 9990
+server.expose({
+    name: 'Number',
+    methods: {
+        add: function(req, res) {
+            console.log('server add:', req.params());
+            var sum = 0;
+            req.params().forEach(function(n) {
+                sum += n;
+            });
+            return res.send(sum);
+        }
+    }
+});
+server.listen(9990, function() {
+   console.log('create server successfully');
 });
 
 var client = require('../lib').createClient({
