@@ -18,6 +18,14 @@ server.expose({
         }
     }
 });
+
+server.use(function(req, res, next) {
+    if (!req.hasOwnProperty('modules')) {
+        req.modules = {name: 'modules'};
+    }
+    next();
+});
+
 server.listen(9990, function() {
    console.log('create server successfully');
 });
