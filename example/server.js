@@ -1,10 +1,7 @@
 var _ = require('underscore');
+var illyria = require('../lib');
 
-var server = require('../lib').createServer({
-    port: 9990
-});
-
-server.expose('Number', {
+illyria.expose('Number', {
     add: function(req, res) {
         console.log('server add:', req.params());
         var sum = 0;
@@ -15,6 +12,9 @@ server.expose('Number', {
     }
 });
 
+var server = require('../lib').createServer({
+    port: 9990
+});
 
 var client = require('../lib').createClient({
     port:9990,
