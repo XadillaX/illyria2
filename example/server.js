@@ -1,4 +1,5 @@
 var _ = require('underscore');
+var async = require('async');
 var illyria = require('../lib');
 
 var server = illyria.createServer({
@@ -15,6 +16,11 @@ server.expose({
                 sum += n;
             });
             return res.send(sum);
+        },
+        minus: function(req, res) {
+            var a = req.param('a');
+            var b = req.param('b');
+            res.json({result: a - b});
         }
     }
 });
@@ -42,15 +48,34 @@ client.on('error', function(err) {
     console.log(err);
 });
 
+
 function run() {
-    client.rpc(
-        'Number',
-        'add',
-        _.sample([1, 2, 3, 4, 5, 6], 2),
-        function(err, data) {
-            console.log('client recv:', err, data);
-            process.nextTick(run);
-        });
+    async.waterfall([
+        function(next) {
+            client.rpc(
+                'Number',
+                'add',
+                _.sample([1, 2, 3, 4, 5, 6], 2),
+                function(err, data) {
+                    console.log('client recv:', err, data);
+                    next();
+                }
+            )
+        },
+        function(next) {
+            client.rpc(
+                'Number',
+                'minus',
+                {a: 3, b: 4},
+                function(err, data) {
+                    console.log('client recv:', err, data);
+                    next();
+                }
+            )
+        }
+    ], function() {
+        process.nextTick(run);
+    });
 }
 
 run();
