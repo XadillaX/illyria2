@@ -1,6 +1,6 @@
 {
     "name": "illyria",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "illyria node client & server",
     "main": "lib/index.js",
     "engines": {
