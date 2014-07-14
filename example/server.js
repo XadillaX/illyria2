@@ -10,7 +10,6 @@ server.expose({
     name: 'Number',
     methods: {
         add: function(req, res) {
-            console.log('server add:', req.params());
             var sum = 0;
             req.params().forEach(function(n) {
                 sum += n;
@@ -50,7 +49,7 @@ client.on('error', function(err) {
 
 
 function run() {
-    async.waterfall([
+    async.parallel([
         function(next) {
             client.rpc(
                 'Number',
