@@ -1,4 +1,5 @@
 var _ = require('underscore');
+var async = require('async');
 
 var client = require('../lib').createClient({
     port:8888,
@@ -6,21 +7,41 @@ var client = require('../lib').createClient({
     retryInterval: 1000,
     reconnect: true
 });
-client.connect();
+client.connect(function() {
+    console.log('connect successfully!');
+});
 
 client.on('error', function(err) {
     console.log(err);
 });
 
 function run() {
-    client.rpc(
-        'IllyriaTest.Number',
-        'add',
-        _.sample([1, 2, 3, 4, 5, 6], 2),
-        function(err, data) {
-            console.log('client recv:', err, data);
-            process.nextTick(run);
-        });
+    async.parallel([
+        function(done) {
+            client.rpc(
+                'IllyriaTest.Number',
+                'add',
+                _.sample([1, 2, 3, 4, 5, 6], 2),
+                function(err, data) {
+                    console.log('client recv:', err, data);
+                    done();
+                });
+
+        },
+        function(done) {
+            client.rpc(
+                'IllyriaTest.Number',
+                'add',
+                _.sample([1, 2, 3, 4, 5, 6], 2),
+                function(err, data) {
+                    console.log('client recv:', err, data);
+                    done();
+                });
+
+        }
+    ], function() {
+        process.nextTick(run);
+    });
 }
 
 run();
