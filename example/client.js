@@ -19,7 +19,7 @@ function run() {
     async.parallel([
         function(done) {
             client.rpc(
-                'IllyriaTest.Number',
+                'Elixir.IllyriaTest.Number',
                 'add',
                 _.sample([1, 2, 3, 4, 5, 6], 2),
                 function(err, data) {
@@ -30,7 +30,7 @@ function run() {
         },
         function(done) {
             client.rpc(
-                'IllyriaTest.Number',
+                'Elixir.IllyriaTest.Number',
                 'add',
                 _.sample([1, 2, 3, 4, 5, 6], 2),
                 function(err, data) {
