@@ -21,7 +21,8 @@
         "async": "*",
         "msgpack": "0.2.x",
         "underscore": "1.6.0",
-        "eventemitter2": "~0.4.11"
+        "eventemitter2": "~0.4.11",
+        "node-zookeeper-client": "~0.2.1"
     },
     "author": "libin <bin.li@upai.com>",
     "scripts": {
