@@ -1,31 +1,53 @@
-var Zookeeper = require('../lib/zookeeper');
+/**
+ * XadillaX created at 2014-09-02 14:08
+ *
+ * Copyright (c) 2014 Huaban.com, all rights
+ * reserved.
+ */
+var _ = require('underscore');
+var async = require('async');
+var illyria = require('../lib');
 
-var zookeeper = new Zookeeper('192.168.3.26:2503');
+var server = illyria.createServer({
+    host: "localhost",
+    port: 8888
+}, {
+    connectingString: "192.168.16.231:2181",
+    root: "illyria",
+    prefix: "p"
+});
 
-setTimeout(function() {
-    zookeeper.updateClientNum(10, function(err, stat) {
-        console.log('update successfully!');
-        setTimeout(function() {
-            zookeeper.close();
-        }, 10000);
+server.expose({
+    name: 'Number',
+    methods: {
+        add: function(req, res) {
+            var sum = 0;
+            req.params().forEach(function(n) {
+                sum += n;
+            });
+            return res.send(sum);
+        },
+        minus: function(req, res) {
+            var a = req.param('a');
+            var b = req.param('b');
+            res.json({ result: a - b });
+        }
+    }
+});
+
+server.use(function(req, res, next) {
+    if(!req.hasOwnProperty('modules')) {
+        req.modules = { name: 'modules' };
+    }
+    next();
+});
+
+server.listen(function() {
+    console.log('create server successfully');
+});
+
+process.on('SIGINT', function() {
+    server.close(function() {
+        process.exit(0);
     });
-}, 1000);
-
-//var zookeeper = require('node-zookeeper-client');
-//var CreateMode = zookeeper.CreateMode;
-//
-//var client = zookeeper.createClient('192.168.3.26:2503');
-//
-//client.once('connected', function() {
-//    console.log('connect successfully!');
-//    client.mkdirp('/vital_moose', function(err, path) {
-//        client.create('/vital_moose/t', CreateMode.EPHEMERAL_SEQUENTIAL, function (err, path) {
-//            console.log('create ephemeral node', err, path);
-//            setTimeout(function () {
-//                client.close();
-//            }, 10000);
-//        });
-//    });
-//});
-//
-//client.connect();
+});
