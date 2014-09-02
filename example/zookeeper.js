@@ -4,21 +4,50 @@
  * Copyright (c) 2014 Huaban.com, all rights
  * reserved.
  */
-var Zookeeper = require("../lib/illyria-zk");
+var _ = require('underscore');
+var async = require('async');
+var illyria = require('../lib');
 
-var zookeeper = new Zookeeper("192.168.16.231:2181");
-zookeeper.setServerInformation("localhost", 4444);
-zookeeper.connect(function(err, path) {
-    console.log("connected: " + path);
+var server = illyria.createServer({
+    host: "localhost",
+    port: 8888
+}, {
+    connectingString: "192.168.16.231:2181",
+    root: "illyria",
+    prefix: "p"
+});
 
-    setInterval(function() {
-        console.log("fake connected.");
-        zookeeper.clientConnected();
-    }, 1000);
+server.expose({
+    name: 'Number',
+    methods: {
+        add: function(req, res) {
+            var sum = 0;
+            req.params().forEach(function(n) {
+                sum += n;
+            });
+            return res.send(sum);
+        },
+        minus: function(req, res) {
+            var a = req.param('a');
+            var b = req.param('b');
+            res.json({ result: a - b });
+        }
+    }
+});
+
+server.use(function(req, res, next) {
+    if(!req.hasOwnProperty('modules')) {
+        req.modules = { name: 'modules' };
+    }
+    next();
+});
+
+server.listen(function() {
+    console.log('create server successfully');
 });
 
 process.on('SIGINT', function() {
-    zookeeper.disconnect(function() {
+    server.close(function() {
         process.exit(0);
     });
 });

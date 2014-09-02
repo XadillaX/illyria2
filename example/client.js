@@ -2,7 +2,7 @@ var _ = require('underscore');
 var async = require('async');
 
 var client = require('../lib').createClient({
-    port:8888,
+    port: 8888,
     runTimeout: 10000,
     retryInterval: 1000,
     reconnect: true
@@ -19,7 +19,7 @@ function run() {
     async.parallel([
         function(done) {
             client.rpc(
-                'Elixir.IllyriaTest.Number',
+                'Number',
                 'add',
                 _.sample([1, 2, 3, 4, 5, 6], 2),
                 function(err, data) {
@@ -30,7 +30,7 @@ function run() {
         },
         function(done) {
             client.rpc(
-                'Elixir.IllyriaTest.Number',
+                'Number',
                 'add',
                 _.sample([1, 2, 3, 4, 5, 6], 2),
                 function(err, data) {
@@ -40,7 +40,7 @@ function run() {
 
         }
     ], function() {
-        process.nextTick(run);
+        setTimeout(run, 500);
     });
 }
 
