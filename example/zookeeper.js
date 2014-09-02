@@ -9,8 +9,8 @@ var async = require('async');
 var illyria = require('../lib');
 
 var server = illyria.createServer({
-    host: "localhost",
-    port: 8888
+    /**host: "localhost",
+    port: 8888**/
 }, {
     connectingString: "192.168.16.231:2181",
     root: "illyria",
@@ -42,7 +42,7 @@ server.use(function(req, res, next) {
     next();
 });
 
-server.listen(function() {
+server.listen(8888, "localhost", function() {
     console.log('create server successfully');
 });
 
