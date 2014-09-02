@@ -1,31 +1,24 @@
-var Zookeeper = require('../lib/zookeeper');
+/**
+ * XadillaX created at 2014-09-02 14:08
+ *
+ * Copyright (c) 2014 Huaban.com, all rights
+ * reserved.
+ */
+var Zookeeper = require("../lib/illyria-zk");
 
-var zookeeper = new Zookeeper('192.168.3.26:2503');
+var zookeeper = new Zookeeper("192.168.16.231:2181");
+zookeeper.setServerInformation("localhost", 4444);
+zookeeper.connect(function(err, path) {
+    console.log("connected: " + path);
 
-setTimeout(function() {
-    zookeeper.updateClientNum(10, function(err, stat) {
-        console.log('update successfully!');
-        setTimeout(function() {
-            zookeeper.close();
-        }, 10000);
+    setInterval(function() {
+        console.log("fake connected.");
+        zookeeper.clientConnected();
+    }, 1000);
+});
+
+process.on('SIGINT', function() {
+    zookeeper.disconnect(function() {
+        process.exit(0);
     });
-}, 1000);
-
-//var zookeeper = require('node-zookeeper-client');
-//var CreateMode = zookeeper.CreateMode;
-//
-//var client = zookeeper.createClient('192.168.3.26:2503');
-//
-//client.once('connected', function() {
-//    console.log('connect successfully!');
-//    client.mkdirp('/vital_moose', function(err, path) {
-//        client.create('/vital_moose/t', CreateMode.EPHEMERAL_SEQUENTIAL, function (err, path) {
-//            console.log('create ephemeral node', err, path);
-//            setTimeout(function () {
-//                client.close();
-//            }, 10000);
-//        });
-//    });
-//});
-//
-//client.connect();
+});
