@@ -1,6 +1,6 @@
 {
     "name": "illyria",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "description": "illyria node client & server",
     "main": "lib/index.js",
     "engines": {
@@ -22,7 +22,8 @@
         "msgpack": "0.2.x",
         "underscore": "1.6.0",
         "eventemitter2": "~0.4.11",
-        "node-zookeeper-client": "~0.2.1"
+        "node-zookeeper-client": "~0.2.1",
+        "enum": "~0.2.6"
     },
     "author": "libin <bin.li@upai.com>",
     "scripts": {
