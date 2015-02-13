@@ -3,9 +3,6 @@
     "version": "1.0.9",
     "description": "illyria node client & server.",
     "main": "lib/index.js",
-    "engines": {
-        "node": ">=0.8.26"
-    },
     "repository": {
         "type": "git",
         "url": "ssh://gitlab@gitlab.widget-inc.com:65422/huaban/illyria-node.git"
