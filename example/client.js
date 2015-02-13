@@ -7,6 +7,7 @@ var client = require('../lib').createClient({
     retryInterval: 1000,
     reconnect: true
 });
+
 client.connect(function() {
     console.log('connect successfully!');
 });
