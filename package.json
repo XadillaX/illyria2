@@ -26,7 +26,9 @@
     "sugar": "^1.4.1"
   },
   "devDependencies": {
+    "coveralls": "^2.11.2",
     "illyria": "^1.1.1",
+    "istanbul": "^0.3.6",
     "mocha": "^2.1.0",
     "should": "^5.0.1"
   }
