@@ -6,6 +6,8 @@
  * reserved
  */
 /* istanbul ignore next */
+(function() {
+
 var async = require("async");
 var illyria2 = require("../");
 var Scarlet = require("scarlet-task");
@@ -209,4 +211,6 @@ function testAbility(callback) {
 
     console.time("Process");
 }
+
+})();
 
