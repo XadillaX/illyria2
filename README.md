@@ -85,3 +85,57 @@ This kind of object has functions below:
 
 > **Tip:** You may get the client `socket` wrapper object through both `req.socket` or `resp.socket`.
 
+### Client
+
+Your client should be created at first:
+
+```javascript
+var illyria2 = require("illyria2");
+var client = illyria2.createClient(SERVER_HOST, SERVER_PORT, options);
+```
+
+or
+
+```javascript
+var client = new illyria2.Client(SERVER_HOST, SERVER_PORT, options);
+```
+
+> options is an optional parameter and may contain:
+>
+> * `maxRetries`: default to 10
+> * `retryInterval`: default to 5000
+> * `maxListeners`: maximum client event listeners count, default to 10
+> * `...`: other options for [net.Socket](https://iojs.org/api/net.html#net_new_net_socket_options)
+
+Then you may connect to the server:
+
+```javascript
+client.connect(function() {
+    // DO SOMETHING AFTER CONNECTED
+    // ...
+});
+
+client.on("error", function(err) {
+    console.log(err);
+});
+```
+
+#### Send a Message to RPC Server
+
+```javascript
+client.send("module", "method", DATA, function(err, data) {
+    console.log(err, data);
+});
+```
+
+> `"module"` and `"method"` are specified by server via `server.expose()`.
+>
+> `DATA` may be a number, string, JSON object and so on.
+>
+> After client received response from RPC server, the callback function will be called. When the server response an error message, the `err` is the responsed error. Otherwise, `data` will be responsed via server's `resp.send()`.
+
+## Benchmark
+
+See [wiki/benchmark](../../wiki/Benchmark) for more information.
+
+
