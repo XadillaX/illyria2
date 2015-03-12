@@ -136,6 +136,6 @@ client.send("module", "method", DATA, function(err, data) {
 
 ## Benchmark
 
-See [wiki/benchmark](../../wiki/Benchmark) or may [wikis/benchmark](../../wiki/Benchmark) for more information.
+See [wiki/benchmark](../../wiki/Benchmark) or may [wikis/benchmark](../../wikis/Benchmark) for more information.
 
 
