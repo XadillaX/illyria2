@@ -10,6 +10,10 @@
     "type": "git",
     "url": "ssh://gitlab@gitlab.widget-inc.com:65422/huaban/illyria-node.git"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/XadillaX/illyria2.git"
+  },
   "keywords": [
     "illyria",
     "RPC",
