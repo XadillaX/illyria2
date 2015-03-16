@@ -22,7 +22,6 @@
     "enum": "^2.0.0",
     "eventemitter2": "^0.4.14",
     "msgpack": "^0.2.6",
-    "node-zookeeper-client": "^0.2.2",
     "sugar": "^1.4.1"
   },
   "devDependencies": {
