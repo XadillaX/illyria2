@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "ssh://gitlab@gitlab.widget-inc.com:65422/xadillax/illyria2.git"
+    "url": "ssh://gitlab@gitlab.widget-inc.com:65422/huaban/illyria-node.git"
   },
   "keywords": [
     "illyria",
