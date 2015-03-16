@@ -1,4 +1,4 @@
-# Illyria [![TravisCI](https://img.shields.io/travis/XadillaX/illyria.svg)](https://travis-ci.org/XadillaX/illyria) [![Coveralls](https://img.shields.io/coveralls/XadillaX/illyria/master.svg)](https://coveralls.io/r/XadillaX/illyria)
+# Illyria [![TravisCI](https://img.shields.io/travis/XadillaX/illyria2.svg)](https://travis-ci.org/XadillaX/illyria2) [![Coveralls](https://img.shields.io/coveralls/XadillaX/illyria2/master.svg)](https://coveralls.io/r/XadillaX/illyria2)
 
 The next generation Illyria RPC SDK for node.js.
 
