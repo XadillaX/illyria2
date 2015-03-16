@@ -1,11 +1,11 @@
-# Illyria [![TravisCI](https://img.shields.io/travis/XadillaX/illyria2.svg)](https://travis-ci.org/XadillaX/illyria2) [![Coveralls](https://img.shields.io/coveralls/XadillaX/illyria2/master.svg)](https://coveralls.io/r/XadillaX/illyria2)
+# Illyria [![TravisCI](https://img.shields.io/travis/XadillaX/illyria.svg)](https://travis-ci.org/XadillaX/illyria) [![Coveralls](https://img.shields.io/coveralls/XadillaX/illyria/master.svg)](https://coveralls.io/r/XadillaX/illyria)
 
 The next generation Illyria RPC SDK for node.js.
 
 ## Installation
 
 ```shell
-$ npm install --save illyria2
+$ npm install --save illyria
 ```
 
 ## Usage
@@ -15,14 +15,14 @@ $ npm install --save illyria2
 First you should create a server.
 
 ```javascript
-var illyria2 = require("illyria2");
-var server = illyria2.createServer(options);
+var illyria = require("illyria");
+var server = illyria.createServer(options);
 ```
 
 or
 
 ```javascript
-var server = new illyria2.Server(options);
+var server = new illyria.Server(options);
 ```
 
 > options is an optional parameter and may contain:
@@ -90,14 +90,14 @@ This kind of object has functions below:
 Your client should be created at first:
 
 ```javascript
-var illyria2 = require("illyria2");
-var client = illyria2.createClient(SERVER_HOST, SERVER_PORT, options);
+var illyria = require("illyria");
+var client = illyria.createClient(SERVER_HOST, SERVER_PORT, options);
 ```
 
 or
 
 ```javascript
-var client = new illyria2.Client(SERVER_HOST, SERVER_PORT, options);
+var client = new illyria.Client(SERVER_HOST, SERVER_PORT, options);
 ```
 
 > options is an optional parameter and may contain:
