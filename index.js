@@ -7,7 +7,6 @@
 require("sugar");
 exports.helper = require("./lib/helper");
 exports.ISocket = require("./lib/isocket");
-exports.Zookeeper = require("./lib/zookeeper");
 exports.Server = require("./lib/server");
 exports.Client = require("./lib/client");
 
