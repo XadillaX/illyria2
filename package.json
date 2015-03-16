@@ -15,7 +15,10 @@
     "RPC",
     "server"
   ],
-  "author": "XadillaX",
+  "author": [
+      "libin <bin.li@upai.com>",
+      "XadillaX <admin@xcoder.in>"
+  ],
   "license": "GPLv2",
   "dependencies": {
     "async": "^0.9.0",
