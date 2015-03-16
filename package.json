@@ -1,31 +1,36 @@
 {
-    "name": "illyria",
-    "version": "1.0.10",
-    "description": "illyria node client & server.",
-    "main": "lib/index.js",
-    "repository": {
-        "type": "git",
-        "url": "ssh://gitlab@gitlab.widget-inc.com:65422/huaban/illyria-node.git"
-    },
-    "keywords": [
-        "illyria",
-        "tcp",
-        "rpc",
-        "client",
-        "server"
-    ],
-    "dependencies": {
-        "async": "^0.9.0",
-        "msgpack": "^0.2.6",
-        "underscore": "^1.7.0",
-        "eventemitter2": "^0.4.14",
-        "node-zookeeper-client": "^0.2.2",
-        "enum": "^0.2.7"
-    },
-    "author": "libin <bin.li@upai.com>",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "readme": "illyria-node",
-    "license": "BSD"
+  "name": "illyria",
+  "version": "2.0.1",
+  "description": "The next generation Illyria RPC SDK for node.js.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://gitlab@gitlab.widget-inc.com:65422/xadillax/illyria2.git"
+  },
+  "keywords": [
+    "illyria",
+    "RPC",
+    "server"
+  ],
+  "author": "XadillaX",
+  "license": "GPLv2",
+  "dependencies": {
+    "async": "^0.9.0",
+    "enum": "^2.0.0",
+    "eventemitter2": "^0.4.14",
+    "msgpack": "^0.2.6",
+    "sugar": "^1.4.1"
+  },
+  "devDependencies": {
+    "coveralls": "^2.11.2",
+    "illyria": "^1.1.1",
+    "istanbul": "^0.3.6",
+    "mocha": "^2.1.0",
+    "nomnom": "^1.8.1",
+    "scarlet-task": "0.1.0-comment",
+    "should": "^5.0.1"
+  }
 }
