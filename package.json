@@ -1,14 +1,10 @@
 {
   "name": "illyria",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "The next generation Illyria RPC SDK for node.js.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
-  },
-  "repository": {
-    "type": "git",
-    "url": "ssh://gitlab@gitlab.widget-inc.com:65422/huaban/illyria-node.git"
+    "test": "ZK_NO_WARN=true mocha"
   },
   "repository": {
     "type": "git",
@@ -20,8 +16,8 @@
     "server"
   ],
   "author": [
-      "libin <bin.li@upai.com>",
-      "XadillaX <admin@xcoder.in>"
+    "libin <bin.li@upai.com>",
+    "XadillaX <admin@xcoder.in>"
   ],
   "license": "GPLv2",
   "dependencies": {
@@ -29,6 +25,7 @@
     "enum": "^2.0.0",
     "eventemitter2": "^0.4.14",
     "msgpack": "^0.2.6",
+    "node-zookeeper-client": "^0.2.2",
     "sugar": "^1.4.1"
   },
   "devDependencies": {
