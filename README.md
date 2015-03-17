@@ -61,6 +61,38 @@ server.listen([SERVER_PORT], [SERVER_HOST], callback);
 >
 > **Caution:** `SERVER_PORT` should be an instance of `Number` and `SERVER_HOST` should be an instance of `String`.
 
+#### With Zookeeper
+
+You can use zookeeper to manage server nodes:
+
+```javascript
+var server = illyria.createServer(OPTIONS, ZOOKEEPER_OPTIONS);
+```
+
+> If you had specified `ZOOKEEPER_OPTIONS`, illyria will use zookeeper to manage this node.
+>
+> `ZOOKEEPER_OPTIONS`:
+> * `connectString`: a connect string or a connect string's array. Refer [here](https://www.npmjs.com/package/node-zookeeper-client#documentation).
+> * `root`: this node's root path. Defaults to `"/illyria"`.
+> * `prefix`: the node name's prefix. Defaults to `"/HB_"`. So the default whole path is `"/illyria/HB_#{node sort}"`.
+> * `...`: other options refer [here](https://www.npmjs.com/package/node-zookeeper-client#client-createclientconnectionstring-options).
+
+##### What Does This Do?
+
+When zookeeper is specified, the server will register for a temporary node under zookeeper.
+
+The content data of that node will be a string like:
+
+> {host},{port},{currentClientCount}
+
+For an example, when a server of `192.168.1.88:1234` is created, and zookeeper options is `{ connectString: foo, root: "/illyria", prefix: "/HB_" }`, a node named `/illyria/HB_0000000001` will be created, and the content will be:
+
+> 192.168.1.88,1234,0
+
+After a new client is connected, the content will be changed to
+
+> 192.168.1.88,1234,1
+
 #### Request
 
 Request will be passed in the exposed server methods as `req`.
