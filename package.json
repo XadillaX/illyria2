@@ -1,6 +1,6 @@
 {
   "name": "illyria",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "The next generation Illyria RPC SDK for node.js.",
   "main": "index.js",
   "scripts": {
