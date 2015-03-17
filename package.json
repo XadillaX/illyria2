@@ -8,10 +8,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "ssh://gitlab@gitlab.widget-inc.com:65422/huaban/illyria-node.git"
-  },
-  "repository": {
-    "type": "git",
     "url": "https://github.com/XadillaX/illyria2.git"
   },
   "keywords": [
@@ -20,8 +16,8 @@
     "server"
   ],
   "author": [
-      "libin <bin.li@upai.com>",
-      "XadillaX <admin@xcoder.in>"
+    "libin <bin.li@upai.com>",
+    "XadillaX <admin@xcoder.in>"
   ],
   "license": "GPLv2",
   "dependencies": {
@@ -29,6 +25,7 @@
     "enum": "^2.0.0",
     "eventemitter2": "^0.4.14",
     "msgpack": "^0.2.6",
+    "node-zookeeper-client": "^0.2.2",
     "sugar": "^1.4.1"
   },
   "devDependencies": {
