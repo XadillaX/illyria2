@@ -171,14 +171,21 @@ client.send("module", "method", DATA, function(err, data) {
 You can use zookeeper to connect to server automatically with simple load balancing:
 
 ```javascript
-var server = illyria.createClient(ZOOKEEPER_OPTIONS);
+var server = illyria.createClient(OPTIONS);
 ```
 
-> `ZOOKEEPER_OPTIONS`:
+> The `OPTIONS` is the same as it mentioned above on client section.
+>
+> But it must has a part called `zookeeper`.
+>
+> `zookeeper`:
 > * `connectString`: a connect string or a connect string's array. Refer [here](https://www.npmjs.com/package/node-zookeeper-client#documentation).
 > * `root`: this node's root path. Defaults to `"/illyria"`.
 > * `prefix`: the node name's prefix. Defaults to `"/HB_"`. So the default whole path is `"/illyria/HB_#{node sort}"`.
 > * `...`: other options refer [here](https://www.npmjs.com/package/node-zookeeper-client#client-createclientconnectionstring-options).
+>
+> eg.
+>   `{ zookeeper: { connectString: "xxx" } }`
 
 ##### What Does This Do?
 
