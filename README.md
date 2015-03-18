@@ -166,6 +166,26 @@ client.send("module", "method", DATA, function(err, data) {
 >
 > After client received response from RPC server, the callback function will be called. When the server response an error message, the `err` is the responsed error. Otherwise, `data` will be responsed via server's `resp.send()`.
 
+#### With Zookeeper
+
+You can use zookeeper to connect to server automatically with simple load balancing:
+
+```javascript
+var server = illyria.createClient(ZOOKEEPER_OPTIONS);
+```
+
+> `ZOOKEEPER_OPTIONS`:
+> * `connectString`: a connect string or a connect string's array. Refer [here](https://www.npmjs.com/package/node-zookeeper-client#documentation).
+> * `root`: this node's root path. Defaults to `"/illyria"`.
+> * `prefix`: the node name's prefix. Defaults to `"/HB_"`. So the default whole path is `"/illyria/HB_#{node sort}"`.
+> * `...`: other options refer [here](https://www.npmjs.com/package/node-zookeeper-client#client-createclientconnectionstring-options).
+
+##### What Does This Do?
+
+When zookeeper is specified, the client will connect to zookeeper and find all registered servers information which are specifed via root and prefix.
+
+Then it will choose a least connection server to connect.
+
 ## Benchmark
 
 See [wiki/benchmark](../../wiki/Benchmark) or may [wikis/benchmark](../../wikis/Benchmark) for more information.
