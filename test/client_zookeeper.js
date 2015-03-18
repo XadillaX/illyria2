@@ -19,7 +19,7 @@ describe("client zookeeper", function() {
 
         _path: "/illyria/HB_"
     };
-    var SERVER_COUNT = 10;
+    var SERVER_COUNT = 5;
     var SERVER_MAX_PORT = SERVER_PORT + SERVER_COUNT - 1;
 
     var clients = [];
@@ -29,6 +29,11 @@ describe("client zookeeper", function() {
     function init(callback) {
         async.waterfall([
             function(callback) {
+                for(var i = 0; i < clients.length; i++) {
+                    clients[i].close();
+                }
+                clients = [];
+
                 if(servers.length) {
                     var i = 0;
                     async.whilst(
@@ -73,7 +78,9 @@ describe("client zookeeper", function() {
     function startup(callback) {
         async.eachLimit(servers, 10, function(server, callback) {
             server.listen(callback);
-        }, callback);
+        }, function() {
+            callback();
+        });
     }
 
     after(function(done) {
@@ -121,7 +128,9 @@ describe("client zookeeper", function() {
     describe("automitically search server", function() {
         before(function(done) {
             init(function() {
-                startup(done);
+                startup(function() {
+                    done();
+                });
             });
         });
 
@@ -166,7 +175,7 @@ describe("client zookeeper", function() {
                 });
             }
 
-            for(var i = 0; i < 9; i++) {
+            for(var i = 0; i < 4; i++) {
                 var client = illyria.createClient({
                     zookeeper: ZOOKEEPER_OPTIONS
                 });
@@ -175,8 +184,8 @@ describe("client zookeeper", function() {
                 clients.push(client);
             }
 
-            scarlet.afterFinish(9, function() {
-                for(var i = 1; i < 10; i++) {
+            scarlet.afterFinish(4, function() {
+                for(var i = 1; i < 5; i++) {
                     clients[i].port.should.within(SERVER_PORT, SERVER_MAX_PORT);
                 }
 
@@ -191,7 +200,7 @@ describe("client zookeeper", function() {
             }, false);
         });
 
-        it("every server should have 3 clients", function(done) {
+        it("every server should have 6 clients", function(done) {
             var scarlet = new Scarlet(1);
 
             function _connect(taskObject) {
@@ -205,7 +214,7 @@ describe("client zookeeper", function() {
                 });
             }
 
-            for(var i = 0; i < 20; i++) {
+            for(var i = 0; i < 25; i++) {
                 var client = illyria.createClient({
                     zookeeper: ZOOKEEPER_OPTIONS
                 });
@@ -214,8 +223,8 @@ describe("client zookeeper", function() {
                 clients.push(client);
             }
 
-            scarlet.afterFinish(9, function() {
-                for(var i = 10; i < 30; i++) {
+            scarlet.afterFinish(25, function() {
+                for(var i = 5; i < 30; i++) {
                     clients[i].port.should.within(SERVER_PORT, SERVER_MAX_PORT);
                 }
 
