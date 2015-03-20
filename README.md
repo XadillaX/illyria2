@@ -132,6 +132,8 @@ or
 var client = new illyria.Client(SERVER_HOST, SERVER_PORT, options);
 ```
 
+> Be careful that `SERVER_PORT` must be an instance of `Number`.
+>
 > options is an optional parameter and may contain:
 >
 > * `maxRetries`: default to 10
