@@ -17,6 +17,7 @@ describe("server protocol", function() {
         async.waterfall([
             function(callback) {
                 if(client) {
+                    client._socket.abc = 1;
                     client.close();
                 }
 
@@ -34,9 +35,9 @@ describe("server protocol", function() {
         server.listen(SERVER_PORT, function() {
             client = illyria.createClient({
                 port: SERVER_PORT,
-                runTimeout: 10000,
+                runTimeout: 1000,
                 retryInterval: 1000,
-                reconnect: true
+                reconnect: false
             });
 
             client.connect(function() {
@@ -61,7 +62,7 @@ describe("server protocol", function() {
                     json: function(req, resp) {
                         req.param("json").should.be.eql(true);
                         req.params().should.be.eql({ json: true });
-                        resp.send(req.params());
+                        resp.json(req.params());
                     },
 
                     error1: function(req, resp) {
@@ -77,6 +78,15 @@ describe("server protocol", function() {
                     }
                 });
 
+                server.expose({
+                    name: "biu",
+                    methods: {
+                        "biubiu": function(req, resp) {
+                            resp.send("biubiubiu");
+                        }
+                    }
+                });
+
                 startup(done);
             });
         });
@@ -85,6 +95,14 @@ describe("server protocol", function() {
             client.rpc("test", "echo", "illyria", function(err, data) {
                 if(err) err.should.be.empty;
                 data.should.be.eql("illyria");
+                done();
+            });
+        });
+
+        it("should received \"biubiubiu\"", function(done) {
+            client.rpc("biu", "biubiu", [], function(err, data) {
+                if(err) err.should.be.empty;
+                data.should.be.eql("biubiubiu");
                 done();
             });
         });
@@ -136,14 +154,23 @@ describe("server protocol", function() {
                     next();
                 });
 
-                server.use(function(req, resp/**, next*/) {
+                server.use(function(req, resp, next) {
+                    if(req.param("pass", false)) {
+                        return next();
+                    }
                     return resp.send("no echo");
                 });
 
+                var _echo = function(req, resp) {
+                    req.params().should.be.eql({ pass: true });
+                    resp.send("echo");
+                };
+
                 server.expose("test", {
-                    echo: function(req, resp) {
-                        req.params().should.be.eql("illyria");
-                        resp.send("illyria");
+                    echo: _echo,
+                    remove: function(req, resp) {
+                        req.socket.removeReceivedEvent("test", req.params().method, _echo);
+                        resp.send("removed");
                     }
                 });
 
@@ -156,6 +183,27 @@ describe("server protocol", function() {
                 should(err).be.empty;
                 data.should.be.eql("no echo");
                 done();
+            });
+        });
+
+        it("should received echo", function(done) {
+            client.rpc("test", "echo", { pass: true }, function(err, data) {
+                should(err).be.empty;
+                data.should.be.eql("echo");
+                done();
+            });
+        });
+
+        it("should timeout after remove", function(done) {
+            client.rpc("test", "remove", { method: "echo", pass: true }, function(err, data) {
+                should(err).be.empty;
+                data.should.be.eql("removed");
+                
+                client.rpc("test", "echo", { pass: true }, function(err, data) {
+                    should(data).be.empty;
+                    err.message.should.be.eql("timeout");
+                    done();
+                });
             });
         });
     });
