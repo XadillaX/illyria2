@@ -31,7 +31,7 @@ describe("client protocol", function() {
     function startup(callback) {
         server.listen(function() {
             client = illyria2.createClient("127.0.0.1", SERVER_PORT, {
-                runTimeout: 10000,
+                runTimeout: 1000,
                 retryInterval: 1000,
                 reconnect: true
             });
@@ -66,6 +66,11 @@ describe("client protocol", function() {
 
                         error: function(req, resp) {
                             resp.json({ err: "test error" });
+                        },
+
+                        cut: function(req/**, resp*/) {
+                            req.socket.end();
+                            req.socket.destroy();
                         }
                     }
                 });
@@ -95,6 +100,20 @@ describe("client protocol", function() {
                 (err instanceof Error).should.be.eql(true);
                 err.message.should.be.eql("test error");
                 done();
+            });
+        });
+
+        it("should reconnect and ok", function(done) {
+            client.send("test", "cut", {}, function(err) {
+                err.message.indexOf("Timeout").should.not.be.eql(-1);
+
+                setTimeout(function() {
+                    client.send("test", "json", { json: true }, function(err, data) {
+                        if(err) err.should.be.empy;
+                        data.should.be.eql({ json: true });
+                        done();
+                    });
+                }, 500);
             });
         });
     });
