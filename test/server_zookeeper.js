@@ -12,7 +12,7 @@ var _zookeeper = require("node-zookeeper-client");
 describe("server zookeeper", function() {
     var SERVER_PORT = 7381, SERVER_HOST = "127.0.0.1";
     var ZOOKEEPER_OPTIONS = {
-        connectString: "127.0.0.1:2181",
+        connectString: [ "127.0.0.1:2181" ],
         prefix: "HB_",
         root: "illyria",
 
@@ -36,7 +36,7 @@ describe("server zookeeper", function() {
                     zookeeperClient = undefined;
                 }
 
-                zookeeperClient = _zookeeper.createClient(ZOOKEEPER_OPTIONS.connectString);
+                zookeeperClient = _zookeeper.createClient(ZOOKEEPER_OPTIONS.connectString[0]);
                 zookeeperClient.connect();
                 zookeeperClient.once("connected", function() {
                     callback();

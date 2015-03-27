@@ -31,18 +31,13 @@ describe("client protocol", function() {
     function startup(callback) {
         server.listen(function() {
             client = illyria2.createClient("127.0.0.1", SERVER_PORT, {
-                runTimeout: 10000,
+                runTimeout: 1000,
                 retryInterval: 1000,
                 reconnect: true
             });
 
             client.connect(function() {
                 callback();
-            });
-
-            client.on("error", function(err) {
-                console.log(err);
-                err.should.be.empty;
             });
         });
     }
@@ -66,6 +61,15 @@ describe("client protocol", function() {
 
                         error: function(req, resp) {
                             resp.json({ err: "test error" });
+                        },
+
+                        cut: function(req/**, resp*/) {
+                            req.socket.end();
+                            req.socket.destroy();
+                        },
+
+                        eecho: function(req, resp) {
+                            resp.send(req.params());
                         }
                     }
                 });
@@ -96,6 +100,53 @@ describe("client protocol", function() {
                 err.message.should.be.eql("test error");
                 done();
             });
+        });
+
+        it("should echo the whole body", function(done) {
+            var _data = "";
+            for(var i = 0; i < 1000000; i++) {
+                _data += "a";
+            }
+
+            client.send("test", "eecho", _data, function(err, data) {
+                if(err) err.should.be.empy;
+                data.should.be.eql(_data);
+                done();
+            });
+        });
+
+        it("should reconnect and ok", function(done) {
+            client.send("test", "cut", {}, function(err) {
+                err.message.indexOf("Timeout").should.not.be.eql(-1);
+
+                setTimeout(function() {
+                    client.send("test", "json", { json: true }, function(err, data) {
+                        if(err) err.should.be.empy;
+                        data.should.be.eql({ json: true });
+                        done();
+                    });
+                }, 500);
+            });
+        });
+
+        it("should occur error and reconnect", function(done) {
+            var errors = [ "manually error", "ISocket: sending on a bad socket." ];
+            client.on("error", function(err) {
+                err.message.should.be.eql(errors[0]);
+                errors.shift();
+            });
+
+            client.socket.socket.emit("error", new Error("manually error"));
+
+            client.send("test", "echo", "illyria", function() {});
+            
+            setTimeout(function() {
+                client.send("test", "echo", "illyria", function(err, data) {
+                    if(err) err.should.be.empy;
+                    data.should.be.eql("illyria");
+                    done();
+                });
+            }, 1500);
         });
     });
 });
