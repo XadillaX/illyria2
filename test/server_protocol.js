@@ -4,7 +4,7 @@
  * Copyright (c) 2015 Huaban.com, all rights
  * reserved
  */
-require("should");
+var should = require("should");
 var async = require("async");
 var illyria = require("illyria");
 var illyria2 = require("../");
@@ -16,6 +16,10 @@ describe("server protocol", function() {
     function init(callback) {
         async.waterfall([
             function(callback) {
+                if(client) {
+                    client.close();
+                }
+
                 if(server) {
                     server.close(callback);
                 } else callback();
@@ -89,6 +93,38 @@ describe("server protocol", function() {
             client.rpc("test", "error", {}, function(err) {
                 (err instanceof Error).should.be.eql(true);
                 err.message.should.be.eql("test error");
+                done();
+            });
+        });
+    });
+
+    describe("middleware", function() {
+        before(function(done) {
+            init(function() {
+                server.use(function(req, resp, next) {
+                    next.should.be.an.instanceof(Function);
+                    next();
+                });
+
+                server.use(function(req, resp/**, next*/) {
+                    return resp.send("no echo");
+                });
+
+                server.expose("test", {
+                    echo: function(req, resp) {
+                        req.params().should.be.eql("illyria");
+                        resp.send("illyria");
+                    }
+                });
+
+                startup(done);
+            });
+        });
+
+        it("should received no echo", function(done) {
+            client.rpc("test", "echo", {}, function(err, data) {
+                should(err).be.empty;
+                data.should.be.eql("no echo");
                 done();
             });
         });
