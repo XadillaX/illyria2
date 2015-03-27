@@ -4,7 +4,7 @@
   "description": "The next generation Illyria RPC SDK for node.js.",
   "main": "index.js",
   "scripts": {
-    "test": "ZK_NO_WARN=true mocha -R nyan"
+    "test": "ZK_NO_WARN=true mocha"
   },
   "repository": {
     "type": "git",

@@ -11,5 +11,5 @@ before_install:
   - sudo apt-get install zookeeperd
 before_script:
   - sudo /etc/init.d/zookeeper start
-after_script: istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
+after_script: ZK_NO_WARN=true istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
 
