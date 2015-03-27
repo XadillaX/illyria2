@@ -64,8 +64,16 @@ describe("server protocol", function() {
                         resp.send(req.params());
                     },
 
-                    error: function(req, resp) {
+                    error1: function(req, resp) {
                         resp.json({ status: 0, msg: "test error" });
+                    },
+
+                    error2: function(req, resp) {
+                        resp.json({ err: "test error" });
+                    },
+
+                    error3: function(req, resp) {
+                        resp.json({ error: "test error" });
                     }
                 });
 
@@ -90,9 +98,31 @@ describe("server protocol", function() {
         });
 
         it("should received error", function(done) {
-            client.rpc("test", "error", {}, function(err) {
-                (err instanceof Error).should.be.eql(true);
-                err.message.should.be.eql("test error");
+            async.parallel({
+                err1: function(callback) {
+                    client.rpc("test", "error1", {}, function(err) {
+                        (err instanceof Error).should.be.eql(true);
+                        err.message.should.be.eql("test error");
+                        callback();
+                    });
+                },
+
+                err2: function(callback) {
+                    client.rpc("test", "error2", {}, function(err) {
+                        (err instanceof Error).should.be.eql(true);
+                        err.message.should.be.eql("test error");
+                        callback();
+                    });
+                },
+
+                err3: function(callback) {
+                    client.rpc("test", "error3", {}, function(err) {
+                        (err instanceof Error).should.be.eql(true);
+                        err.message.should.be.eql("test error");
+                        callback();
+                    });
+                }
+            }, function() {
                 done();
             });
         });
