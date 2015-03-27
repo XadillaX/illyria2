@@ -39,11 +39,6 @@ describe("client protocol", function() {
             client.connect(function() {
                 callback();
             });
-
-            client.on("error", function(err) {
-                console.log(err);
-                err.should.be.empty;
-            });
         });
     }
 
@@ -132,6 +127,26 @@ describe("client protocol", function() {
                     });
                 }, 500);
             });
+        });
+
+        it("should occur error and reconnect", function(done) {
+            var errors = [ "manually error", "ISocket: sending on a bad socket." ];
+            client.on("error", function(err) {
+                err.message.should.be.eql(errors[0]);
+                errors.shift();
+            });
+
+            client.socket.socket.emit("error", new Error("manually error"));
+
+            client.send("test", "echo", "illyria", function() {});
+            
+            setTimeout(function() {
+                client.send("test", "echo", "illyria", function(err, data) {
+                    if(err) err.should.be.empy;
+                    data.should.be.eql("illyria");
+                    done();
+                });
+            }, 1500);
         });
     });
 });
