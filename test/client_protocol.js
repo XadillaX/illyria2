@@ -71,6 +71,10 @@ describe("client protocol", function() {
                         cut: function(req/**, resp*/) {
                             req.socket.end();
                             req.socket.destroy();
+                        },
+
+                        eecho: function(req, resp) {
+                            resp.send(req.params());
                         }
                     }
                 });
@@ -99,6 +103,19 @@ describe("client protocol", function() {
             client.send("test", "error", {}, function(err) {
                 (err instanceof Error).should.be.eql(true);
                 err.message.should.be.eql("test error");
+                done();
+            });
+        });
+
+        it("should echo the whole body", function(done) {
+            var _data = "";
+            for(var i = 0; i < 1000000; i++) {
+                _data += "a";
+            }
+
+            client.send("test", "eecho", _data, function(err, data) {
+                if(err) err.should.be.empy;
+                data.should.be.eql(_data);
                 done();
             });
         });
