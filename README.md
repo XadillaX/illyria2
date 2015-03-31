@@ -42,7 +42,7 @@ server.expose("module", {
         // ... do sth ...
         resp.send(RESPONSE_MESSAGE);
     }
-});
+}, [OPTIONS]);
 ```
 
 > The code above will expose (may overwrite previous module `"module"`) the whole module `"module"` with only one method `"method"` to clients.
@@ -50,6 +50,12 @@ server.expose("module", {
 > And the method `"method"` will do something and send `RESPONSE_MESSAGE` back to client who made this request.
 >
 > `req` is [Request](#request) which will be metioned after and `resp` is [Response](#response) which will be metioned later.
+>
+> **Attention:** `OPTIONS` is an optional parameter that is an instance of object.
+>
+> `OPTIONS`:
+>
+> * `alias`: You may specify some alias rules for `module` or `methods`. For an example, if your module name is `fooBar` and the `OPTIONS` is `{ alias: [ { module: "upperCamel" } ] }`, the module `FooBar` will be exposed at the same time while `fooBar` is exposed;
 
 When all modules are exposed, you can let the server listen to a certain port:
 

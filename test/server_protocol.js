@@ -207,5 +207,40 @@ describe("server protocol", function() {
             });
         });
     });
+
+    describe("expose copies", function() {
+        before(function(done) {
+            init(function() {
+                server.expose("fooBar", {
+                    fooBaz: function(req, resp) {
+                        resp.send("echo");
+                    }
+                }, {
+                    alias: [
+                        { module: "upperCamel", method: "underscore" },
+                        { module: "lowerCamel" }
+                    ]
+                });
+
+                startup(done);
+            });
+        });
+
+        it("should received echo", function(done) {
+            client.rpc("fooBar", "fooBaz", {}, function(err, data) {
+                should(err).be.empty;
+                data.should.be.eql("echo");
+                done();
+            });
+        });
+
+        it("should received echo again", function(done) {
+            client.rpc("FooBar", "foo_baz", {}, function(err, data) {
+                should(err).be.empty;
+                data.should.be.eql("echo");
+                done();
+            });
+        });
+    });
 });
 
