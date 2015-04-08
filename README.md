@@ -142,8 +142,9 @@ var client = new illyria.Client(SERVER_HOST, SERVER_PORT, options);
 >
 > options is an optional parameter and may contain:
 >
+> * `runTimeout`: dafault to 10000 (ms)
 > * `maxRetries`: default to 10
-> * `retryInterval`: default to 5000
+> * `retryInterval`: default to 5000 (ms)
 > * `maxListeners`: maximum client event listeners count, default to 10
 > * `...`: other options for [net.Socket](https://iojs.org/api/net.html#net_new_net_socket_options)
 
@@ -204,4 +205,3 @@ Then it will choose a least connection server to connect.
 ## Benchmark
 
 See [wiki/benchmark](../../wiki/Benchmark) or may [wikis/benchmark](../../wikis/Benchmark) for more information.
-
