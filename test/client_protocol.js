@@ -4,7 +4,7 @@
  * Copyright (c) 2015 Huaban.com, all rights
  * reserved
  */
-require("should");
+var should = require("should");
 var async = require("async");
 var illyria = require("illyria");
 var illyria2 = require("../");
@@ -132,6 +132,7 @@ describe("client protocol", function() {
         it("should occur error and reconnect", function(done) {
             var errors = [ "manually error", "ISocket: sending on a bad socket." ];
             client.on("error", function(err) {
+                if(errors[0] === undefined) return;
                 err.message.should.be.eql(errors[0]);
                 errors.shift();
             });
@@ -147,6 +148,51 @@ describe("client protocol", function() {
                     done();
                 });
             }, 1500);
+        });
+
+        it("should reconnect after several tries", function(done) {
+            this.timeout(10000);
+
+            // var errors = [ "manually error", "ISocket: sending on a bad socket." ];
+            server.close();
+            server = null;
+            client.socket.socket.end();
+
+            setTimeout(function() {
+                init(function() {
+                    server.expose({
+                        name: "test",
+                        methods: {
+                            echo: function(req, resp) {
+                                req.params().should.be.eql("illyria");
+                                resp.send("illyria");
+                            }
+                        }
+                    });
+
+                    server.listen(function() {
+                        client.send("test", "echo", "illyria", function(err) {
+                            err.message.should.be.eql("Timeout when send and wait for response after 1000ms.");
+                        });
+
+                        setTimeout(function() {
+                            client.send("test", "echo", "illyria", function(err, echo) {
+                                should(err).be.empty;
+                                echo.should.be.eql("illyria");
+                                done();
+                            });
+                        }, 2000);
+                    });
+                });
+            }, 7000);
+
+            // setTimeout(function() {
+            //     client.send("test", "echo", "illyria", function(err, data) {
+            //         if(err) err.should.be.empy;
+            //         data.should.be.eql("illyria");
+            //         done();
+            //     });
+            // }, 1500);
         });
     });
 });
