@@ -4,7 +4,7 @@
  * Copyright (c) 2015 Huaban.com, all rights
  * reserved
  */
-var should = require("should");
+require("should");
 var async = require("async");
 var illyria = require("illyria");
 var illyria2 = require("../");
@@ -170,18 +170,20 @@ describe("client protocol", function() {
                         }
                     });
 
-                    server.listen(function() {
-                        client.send("test", "echo", "illyria", function(err) {
-                            err.message.should.be.eql("Timeout when send and wait for response after 1000ms.");
-                        });
+                    var send = function() {
+                        client.send("test", "echo", "illyria", function(err, echo) {
+                            if(err) {
+                                err.message.should.be.eql("Timeout when send and wait for response after 1000ms.");
+                                return setTimeout(send, 1000);
+                            }
 
-                        setTimeout(function() {
-                            client.send("test", "echo", "illyria", function(err, echo) {
-                                should(err).be.empty;
-                                echo.should.be.eql("illyria");
-                                done();
-                            });
-                        }, 2000);
+                            echo.should.be.eql("illyria");
+                            done();
+                        });
+                    };
+
+                    server.listen(function() {
+                        setTimeout(send, 1000);
                     });
                 });
             }, 7000);
