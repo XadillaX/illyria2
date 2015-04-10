@@ -151,7 +151,7 @@ describe("client protocol", function() {
         });
 
         it("should reconnect after several tries", function(done) {
-            this.timeout(10000);
+            this.timeout(100000);
 
             // var errors = [ "manually error", "ISocket: sending on a bad socket." ];
             server.close();
