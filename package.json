@@ -34,7 +34,7 @@
     "istanbul": "^0.3.6",
     "mocha": "^2.1.0",
     "nomnom": "^1.8.1",
-    "scarlet-task": "%0.1.0-comment",
+    "scarlet-task": "^0.1.0-comment",
     "should": "^5.0.1"
   }
 }
