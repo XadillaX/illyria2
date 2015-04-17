@@ -163,6 +163,26 @@ client.on("error", function(err) {
 });
 ```
 
+#### Events
+
+##### Error
+
+```javascript
+client.on("error", function(err) {});
+```
+
+##### Try Reconnect
+
+```javascript
+client.on("tryReconnect", function(after) {});
+```
+
+##### Connected
+
+```javascript
+client.on("connected", function() {});
+```
+
 #### Send a Message to RPC Server
 
 ```javascript

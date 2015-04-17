@@ -158,6 +158,13 @@ describe("client protocol", function() {
             server = null;
             client.socket.socket.end();
 
+            var times = 0;
+            var reconnectedEmitted = false;
+            client.on("tryReconnect", function(after) {
+                if(!process.env.ZK_NO_WARN) console.log("auto reconnect after " + after + "ms.");
+                after.should.be.eql(Math.pow(2, times++) * 1000);
+            });
+
             setTimeout(function() {
                 init(function() {
                     server.expose({
@@ -178,23 +185,21 @@ describe("client protocol", function() {
                             }
 
                             echo.should.be.eql("illyria");
+                            times.should.be.above(0);
+                            reconnectedEmitted.should.be.eql(true);
                             done();
                         });
                     };
 
                     server.listen(function() {
+                        client.on("connected", function() {
+                            reconnectedEmitted = true;
+                            if(!process.env.ZK_NO_WARN) console.log("connected");
+                        });
                         setTimeout(send, 1000);
                     });
                 });
             }, 7000);
-
-            // setTimeout(function() {
-            //     client.send("test", "echo", "illyria", function(err, data) {
-            //         if(err) err.should.be.empy;
-            //         data.should.be.eql("illyria");
-            //         done();
-            //     });
-            // }, 1500);
         });
     });
 });
