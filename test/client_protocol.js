@@ -160,7 +160,11 @@ describe("client protocol", function() {
 
             var times = 0;
             var reconnectedEmitted = false;
+            client.on("error", function(err) {
+                if(!process.env.ZK_NO_WARN) console.log(">>>", err.message);
+            });
             client.on("tryReconnect", function(after) {
+                client.connectStatus().should.be.eql("RECONNECTING");
                 if(!process.env.ZK_NO_WARN) console.log("auto reconnect after " + after + "ms.");
                 after.should.be.eql(Math.pow(2, times++) * 1000);
             });
@@ -184,6 +188,7 @@ describe("client protocol", function() {
                                 return setTimeout(send, 1000);
                             }
 
+                            client.connectStatus().should.be.eql("CONNECTED");
                             echo.should.be.eql("illyria");
                             times.should.be.above(0);
                             reconnectedEmitted.should.be.eql(true);

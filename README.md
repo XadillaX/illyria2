@@ -147,7 +147,6 @@ var client = new illyria.Client(SERVER_HOST, SERVER_PORT, options);
 > * `runTimeout`: dafault to 10000 (ms)
 > * `maxRetries`: default to 10
 > * `retryInterval`: default to 5000 (ms)
-> * `maxListeners`: maximum client event listeners count, default to 10
 > * `...`: other options for [net.Socket](https://iojs.org/api/net.html#net_new_net_socket_options)
 
 Then you may connect to the server:
@@ -189,6 +188,12 @@ client.on("connected", function() {});
 client.send("module", "method", DATA, function(err, data) {
     console.log(err, data);
 });
+```
+
+#### Get Current Connect Status
+
+```javascript
+client.connectStatus(); ///< DISCONNECTED, etc.
 ```
 
 > `"module"` and `"method"` are specified by server via `server.expose()`.
