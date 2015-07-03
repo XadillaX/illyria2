@@ -17,7 +17,8 @@
   ],
   "author": "libin <bin.li@upai.com> (http://huaban.com/)",
   "contributors": [
-    "XadillaX <kaidi.zhu@huaban.com> (http://xcoder.in/)"
+    "XadillaX <kaidi.zhu@huaban.com> (http://xcoder.in/)",
+    "ADoyle <bowen.cai@huaban.com> (https://github.com/adoyle-h)"
   ],
   "license": "MIT",
   "dependencies": {
