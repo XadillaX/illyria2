@@ -32,10 +32,10 @@
   "devDependencies": {
     "coveralls": "^2.11.2",
     "illyria": "^1.1.1",
-    "istanbul": "^0.3.6",
-    "mocha": "^2.1.0",
+    "istanbul": "^0.3.13",
+    "mocha": "^2.2.5",
     "nomnom": "^1.8.1",
     "scarlet-task": "^0.1.0-comment",
-    "should": "^5.0.1"
+    "should": "^7.0.1"
   }
 }
