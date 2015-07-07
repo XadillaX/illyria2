@@ -7,18 +7,7 @@ node_js:
   - "iojs-v1.1.0"
   - "iojs-v1.2.0"
 before_install:
-  - sudo echo "deb http://mirrors.aliyun.com/ubuntu/ precise main restricted universe multiverse \
-      deb http://mirrors.aliyun.com/ubuntu/ precise-security main restricted universe multiverse \
-        deb http://mirrors.aliyun.com/ubuntu/ precise-updates main restricted universe multiverse \
-          deb http://mirrors.aliyun.com/ubuntu/ precise-proposed main restricted universe multiverse \
-            deb http://mirrors.aliyun.com/ubuntu/ precise-backports main restricted universe multiverse \
-              deb-src http://mirrors.aliyun.com/ubuntu/ precise main restricted universe multiverse \
-                deb-src http://mirrors.aliyun.com/ubuntu/ precise-security main restricted universe multiverse \
-                  deb-src http://mirrors.aliyun.com/ubuntu/ precise-updates main restricted universe multiverse \
-                    deb-src http://mirrors.aliyun.com/ubuntu/ precise-proposed main restricted universe multiverse \
-                      deb-src http://mirrors.aliyun.com/ubuntu/ precise-backports main restricted universe multiverse" \
-    > /etc/apt/sources.list
-  - sudo apt-get update
+  - sudo ./.update_apt.sh
   - sudo apt-get install zookeeper
   - sudo apt-get install zookeeperd
 before_script:
