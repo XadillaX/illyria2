@@ -190,6 +190,14 @@ client.send("module", "method", DATA, function(err, data) {
 });
 ```
 
+#### Send a Cast Message to RPC Server
+
+```javascript
+clisent.cast("module", "method", DATA, function(err) {
+    console.log(err);
+});
+```
+
 #### Get Current Connect Status
 
 ```javascript
