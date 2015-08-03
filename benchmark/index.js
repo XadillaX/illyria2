@@ -163,8 +163,8 @@ function testPerAbility(taskObject) {
     var scarlet = new Scarlet(opts.complicating);
 
     function test(taskObject) {
-        taskObject.task.client.send("benchmark", "echo", block, function(err, data) {
-            if(data !== block) {
+        taskObject.task.client.send("benchmark", "echo", { block: block }, function(err, data) {
+            if(data.block !== block) {
                 inconsistent++;
             }
             
