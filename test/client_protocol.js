@@ -95,9 +95,9 @@ describe("client protocol", function() {
         });
 
         it("should received { json: null }", function(done) {
-            client.send("test", "eecho", { json: 1 / 0 }, function(err, data) {
+            client.send("test", "eecho", { json: 1 / 0, nosj: 1 }, function(err, data) {
                 if(err) err.should.be.empty;
-                data.should.be.eql({ json: null });
+                data.should.be.eql({ json: null, nosj: 1 });
                 done();
             });
         });
