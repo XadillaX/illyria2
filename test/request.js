@@ -21,4 +21,3 @@ describe("request object", function() {
         req.param("c", 3).should.be.eql(3);
     });
 });
-
