@@ -6,7 +6,7 @@
  * reserved.
  */
 var opts = require("nomnom").script("illyria").option("host", {
-    abbr: "h",
+    abbr: "o",
     default: "127.0.0.1",
     help: "the server host"
 }).option("port", {
@@ -29,6 +29,14 @@ var opts = require("nomnom").script("illyria").option("host", {
     abbr: "t",
     default: 10000,
     help: "the run timeout"
+}).option("version", {
+    abbr: "v",
+    help: "show the version of illyria",
+    flag: true,
+    callback: function() {
+        var pkg = require("../package");
+        return "illyria v" + pkg.version;
+    }
 }).parse();
 
 var Illyria = require("../");
