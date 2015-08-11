@@ -94,10 +94,10 @@ describe("client protocol", function() {
             });
         });
 
-        it("should received { json: null }", function(done) {
-            client.send("test", "eecho", { json: 1 / 0, nosj: 1 }, function(err, data) {
+        it("should received { json: null, nosj: 1, sojn: null, osnj: undefined }", function(done) {
+            client.send("test", "eecho", { json: 1 / 0, nosj: 1, sojn: null, osnj: undefined }, function(err, data) {
                 if(err) err.should.be.empty;
-                data.should.be.eql({ json: null, nosj: 1 });
+                data.should.be.eql({ json: null, nosj: 1, sojn: null, osnj: null });
                 done();
             });
         });
@@ -216,4 +216,3 @@ describe("client protocol", function() {
         });
     });
 });
-
