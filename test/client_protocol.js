@@ -70,6 +70,10 @@ describe("client protocol", function() {
 
                         eecho: function(req, resp) {
                             resp.send(req.params());
+                        },
+
+                        date: function(req, resp) {
+                            resp.send(req.params());
                         }
                     }
                 });
@@ -106,6 +110,14 @@ describe("client protocol", function() {
             client.send("test", "error", {}, function(err) {
                 (err instanceof Error).should.be.eql(true);
                 err.message.should.be.eql("test error");
+                done();
+            });
+        });
+
+        it("should received a date string", function(done) {
+            client.send("test", "date", { date: new Date(0) }, function(err, data) {
+                (!!err).should.be.eql(false);
+                data.date.should.be.eql("1970-01-01T00:00:00.000Z");
                 done();
             });
         });
