@@ -243,4 +243,3 @@ describe("server protocol", function() {
         });
     });
 });
-
