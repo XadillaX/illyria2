@@ -16,7 +16,7 @@
     ],
     "dependencies": {
         "async": "^0.9.0",
-        "msgpack": "^0.2.6",
+        "msgpack": "^1.0.0",
         "underscore": "^1.7.0",
         "eventemitter2": "^0.4.14",
         "node-zookeeper-client": "^0.2.2",
