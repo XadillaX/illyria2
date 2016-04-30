@@ -25,22 +25,21 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "async": "^1.4.0",
-    "enum": "^2.1.0",
-    "eventemitter2": "^0.4.14",
-    "msgpack": "^0.2.6",
-    "node-zookeeper-client": "^0.2.2",
-    "nomnom": "^1.8.1",
-    "sugar": "^1.4.1",
-    "term-color": "^1.0.1"
+    "async": "1.5.2",
+    "enum": "2.1.0",
+    "eventemitter2": "1.0.3",
+    "msgpack": "1.0.2",
+    "node-zookeeper-client": "0.2.2",
+    "nomnom": "1.8.1",
+    "sugar": "1.4.1",
+    "term-color": "1.0.1"
   },
   "devDependencies": {
-    "coveralls": "^2.11.2",
-    "illyria": "^1.1.1",
-    "istanbul": "^0.3.13",
-    "mocha": "^2.2.5",
-    "nomnom": "^1.8.1",
-    "scarlet-task": "^0.1.0-comment",
-    "should": "^7.0.1"
+    "coveralls": "2.11.9",
+    "illyria": "1.1.2",
+    "istanbul": "0.4.3",
+    "mocha": "2.4.5",
+    "scarlet-task": "0.1.0",
+    "should": "8.3.1"
   }
 }
