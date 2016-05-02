@@ -10,6 +10,7 @@ before_install:
   - ./update_apt
   - sudo apt-get install zookeeper
   - sudo apt-get install zookeeperd
+  - export CXX="g++-4.8" CXX="gcc-4.8"
 before_script:
   - sudo /etc/init.d/zookeeper start
 addons:
