@@ -16,7 +16,7 @@
     "server"
   ],
   "bin": {
-    "illyria": "bin/illyria.js"
+    "illyria": "bin/illyria"
   },
   "author": "libin <bin.li@upai.com> (http://huaban.com/)",
   "contributors": [
